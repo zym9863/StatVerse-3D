@@ -5,10 +5,10 @@ import { ConfidenceIntervalVisualizer } from './visualizers/ConfidenceIntervalVi
 import { UIController } from './ui/UIController';
 
 class StatVerse3D {
-  private sceneManager: SceneManager;
-  private paramVisualizer: ParameterEstimationVisualizer;
-  private ciVisualizer: ConfidenceIntervalVisualizer;
-  private uiController: UIController;
+  private sceneManager!: SceneManager;
+  private paramVisualizer!: ParameterEstimationVisualizer;
+  private ciVisualizer!: ConfidenceIntervalVisualizer;
+  private uiController!: UIController;
   private currentMode: 'parameterEstimation' | 'confidenceInterval' = 'parameterEstimation';
 
   constructor() {
@@ -18,19 +18,24 @@ class StatVerse3D {
     this.sceneManager = new SceneManager(canvas);
     this.paramVisualizer = new ParameterEstimationVisualizer();
     this.ciVisualizer = new ConfidenceIntervalVisualizer();
-    
+
     this.sceneManager.addObject(this.paramVisualizer.getGroup());
     this.sceneManager.addObject(this.ciVisualizer.getGroup());
-    
+
+    this.paramVisualizer.getGroup().visible = true;
     this.ciVisualizer.getGroup().visible = false;
-    
+
     this.uiController = new UIController(this.paramVisualizer, this.ciVisualizer);
-    
+
     this.createLegend();
     this.setupEventListeners();
+    this.switchMode(this.currentMode);
     this.startAnimation();
   }
 
+  /**
+   * 创建可视化图例，帮助用户理解场景中的颜色含义。
+   */
   private createLegend(): void {
     const legend = document.createElement('div');
     legend.className = 'legend';
@@ -56,18 +61,25 @@ class StatVerse3D {
     document.getElementById('app')?.appendChild(legend);
   }
 
+  /**
+   * 监听 UI 控制面板的配置变更事件，按需切换可视化模式。
+   */
   private setupEventListeners(): void {
-    const checkMode = () => {
-      const config = this.uiController.getConfig();
+    const unsubscribe = this.uiController.onConfigChange((config) => {
       if (config.mode !== this.currentMode) {
         this.currentMode = config.mode;
         this.switchMode(this.currentMode);
       }
-    };
+    });
 
-    setInterval(checkMode, 100);
+    window.addEventListener('beforeunload', () => {
+      unsubscribe();
+    });
   }
 
+  /**
+   * 根据 UI 面板的可视化模式开关渲染分组显隐。
+   */
   private switchMode(mode: 'parameterEstimation' | 'confidenceInterval'): void {
     if (mode === 'parameterEstimation') {
       this.paramVisualizer.getGroup().visible = true;
@@ -78,6 +90,9 @@ class StatVerse3D {
     }
   }
 
+  /**
+   * 启动场景渲染循环，可在回调中填充额外动画逻辑。
+   */
   private startAnimation(): void {
     this.sceneManager.startAnimation(() => {
       // 可以在这里添加额外的动画逻辑

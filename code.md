@@ -15,13 +15,13 @@
 
 ## 风险与改进点
 
-- **模式切换机制** `StatVerse3D.setupEventListeners()` 使用 `setInterval` 轮询 UI 状态，可能导致不必要的 CPU 开销。建议改为事件驱动（例如在 `UIController` 配置变化时触发回调）。
+- **模式切换机制（已修复）** `StatVerse3D` 现通过 `UIController.onConfigChange()` 事件驱动切换模式，消除了 `setInterval` 轮询造成的 CPU 负担。
 - **资源释放** `SceneManager.clearScene()` 中对 `THREE.Scene` 的清理逻辑未处理 `OrbitControls` 事件解绑与窗口事件监听，若频繁创建销毁场景可能导致监听器累积。
 - **渲染参数** `SceneManager` 中的 `renderer.setSize(window.innerWidth, window.innerHeight)` 直接依赖窗口尺寸，在多实例或嵌入式场景下可能需要额外参数或容器尺寸。
 
 ## 建议行动项
 
-- **优化 UI 事件** 为 `UIController` 增加事件发布机制，`StatVerse3D` 基于事件而非轮询切换模式。
+- **优化 UI 事件（已完成）** 为 `UIController` 增加事件发布机制，`StatVerse3D` 基于事件而非轮询切换模式。
 - **补充测试数据** 提供示例数据集或预设参数，帮助用户快速理解 3D 统计图的含义。
 - **完善文档** 在 `README.md` 中加入可视化效果截图与使用示例，提高宣传效果。
 
