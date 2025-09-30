@@ -11,6 +11,7 @@
 - 📈 参数估计可视化
 - 🎮 实时交互控制
 - 🔧 基于 dat.GUI 的参数调节
+- 📱 PWA 支持 - 可安装、离线使用
 
 ## 技术栈
 
@@ -18,6 +19,7 @@
 - **TypeScript** - 类型安全的开发
 - **Vite** - 快速的构建工具
 - **dat.GUI** - 参数控制界面
+- **PWA** - 渐进式 Web 应用支持
 
 ## 安装
 
@@ -43,7 +45,33 @@ pnpm build
 
 # 预览生产构建
 pnpm preview
+
+# 生成 PWA 图标
+pnpm generate-icons
 ```
+
+## PWA 支持
+
+本项目支持作为 PWA (渐进式 Web 应用) 运行:
+
+- ✅ 可安装到桌面/主屏幕
+- ✅ 离线访问支持
+- ✅ 自动更新缓存
+- ✅ 跨平台支持 (Windows、macOS、Linux、iOS、Android)
+
+### 首次配置
+
+1. 安装 Python 依赖:
+```bash
+pip install Pillow
+```
+
+2. 生成应用图标:
+```bash
+python generate_icons.py
+```
+
+详细的 PWA 配置说明请查看 [PWA_SETUP.md](./PWA_SETUP.md)。
 
 ## 项目结构
 

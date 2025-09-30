@@ -11,6 +11,7 @@ A Three.js-based 3D statistics visualization tool for displaying interactive thr
 - 📈 Parameter estimation visualization
 - 🎮 Real-time interactive controls
 - 🔧 Parameter adjustment based on dat.GUI
+- 📱 PWA support for installable offline experience
 
 ## Tech Stack
 
@@ -18,6 +19,7 @@ A Three.js-based 3D statistics visualization tool for displaying interactive thr
 - **TypeScript** - Type-safe development
 - **Vite** - Fast build tool
 - **dat.GUI** - Parameter control interface
+- **PWA** - Progressive Web App support
 
 ## Installation
 
@@ -43,7 +45,33 @@ pnpm build
 
 # Preview production build
 pnpm preview
+
+# Generate PWA icons
+pnpm generate-icons
 ```
+
+## PWA Support
+
+This project can run as a Progressive Web App (PWA):
+
+- ✅ Installable on desktop/mobile home screen
+- ✅ Offline access support
+- ✅ Automatic cache updates
+- ✅ Cross-platform support (Windows, macOS, Linux, iOS, Android)
+
+### Initial Setup
+
+1. Install the Python dependency:
+```bash
+pip install Pillow
+```
+
+2. Generate the application icons:
+```bash
+python generate_icons.py
+```
+
+For detailed PWA configuration guidance, refer to [PWA_SETUP.md](./PWA_SETUP.md).
 
 ## Project Structure
 

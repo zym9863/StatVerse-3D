@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# PWA generated icons (可选,如果想提交生成的图标,删除这行)
+# public/icons/
